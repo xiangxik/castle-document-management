@@ -1,0 +1,80 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html>
+<head>
+<div th:replace="/console/layout :: head('管理员编辑','','')"></div>
+<script src="http://parsleyjs.org/dist/parsley.min.js"></script>
+</head>
+<body>
+	<div th:replace="/console/layout :: header"></div>
+
+	<div th:replace="/console/layout :: sidebar('member_admin')"></div>
+
+	<div id="page_content">
+		<div id="page_content_inner">
+
+			<ul class="uk-breadcrumb">
+				<li><a th:href="@{/console/admin}">人员管理</a></li>
+				<li><span>管理员编辑</span></li>
+			</ul>
+
+			<form id="main-form" class="uk-form-stacked" th:action="@{/console/admin/save}" method="post" th:object="${entity}"
+				data-parsley-validate>
+				<input type="hidden" th:field="*{id}">
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-username">账号</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" id="input-username" th:field="*{username}" required type="text" placeholder="请输入账号">
+					</div>
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-password">密码</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" th:if="${entity.new}" id="input-password" required name="rawPassword" value="" type="text" placeholder="请输入密码" onfocus="this.type='password'">
+						<input class="uk-input" th:if="!${entity.new}" id="input-password" name="rawPassword" value="" type="text" placeholder="请输入密码, 留空则不修改密码" onfocus="this.type='password'">
+					</div>
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-name">姓名</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" id="input-name" th:field="*{name}" required type="text" placeholder="请输入姓名">
+					</div>
+				</div>
+				<div class="uk-margin">
+					<div class="uk-align-right">
+						<button class="uk-button uk-button-primary" type="submit">保存</button>
+						<button class="uk-button uk-button-default" id="back-button" type="button">返回列表</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+	<div th:replace="/console/layout :: footer"></div>
+
+	<script type="text/javascript" th:inline="javascript">
+		var base = /*[[${#httpServletRequest.getContextPath()}]]*/"";
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			var $form = $("#main-form");
+			$form.parsley().on('form:submit', function() {
+				$.post($form.attr('action'), $form.serialize(), function(result) {
+					if (result.success) {
+						location.href = base + "/console/admin";
+					} else {
+						UIkit.notification(result.msg);
+					}
+				}, "json");
+
+				return false;
+			});
+
+			$("#back-button").on("click", function() {
+				location.href = base + "/console/admin";
+			});
+		});
+	</script>
+</body>
+</html>

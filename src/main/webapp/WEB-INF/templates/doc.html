@@ -1,0 +1,47 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html>
+<head>
+<div th:replace="/layout :: head('首页','','')"></div>
+</head>
+<body>
+	<div th:replace="/layout :: header"></div>
+
+	<aside class="tm-sidebar-left uk-visible@m">
+		<h4>目录</h4>
+		<div th:utext="${doc.catalog}"></div>
+	</aside>
+	<div id="offcanvas-usage" uk-offcanvas>
+		<div id="offcanvas-nav" uk-offcanvas="overlay: true">
+			<div class="uk-offcanvas-bar" th:inline="text">
+				<h4>目录</h4>
+				<div th:utext="${doc.catalog}"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id="page_content">
+		<div id="page_content_inner">
+
+			<article class="uk-article">
+
+				<h1 class="uk-article-title">
+					<a class="uk-link-reset" href="" th:text="${doc.title}"></a>
+				</h1>
+
+				<p class="uk-article-meta" th:inline="text">
+					创建时间：[[${#dates.format(doc.createdDate, 'yyyy-MM-dd HH:mm:ss')}]]
+				</p>
+
+				<p class="uk-text-lead" th:utext="${doc.summary}"></p>
+
+				<p th:utext="${doc.htmlContent}"></p>
+
+			</article>
+		</div>
+	</div>
+
+	<div th:replace="/layout :: footer"></div>
+
+</body>
+</html>

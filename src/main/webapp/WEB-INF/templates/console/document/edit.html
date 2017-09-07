@@ -1,0 +1,108 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html>
+<head>
+<div th:replace="/console/layout :: head('文库编辑','','')"></div>
+<link rel="stylesheet" th:href="@{/assets/vendor/editor.md/css/editormd.min.css}" />
+<script th:src="@{/assets/vendor/editor.md/editormd.min.js}"></script>
+<script src="http://parsleyjs.org/dist/parsley.min.js"></script>
+</head>
+<body>
+	<div th:replace="/console/layout :: header"></div>
+
+	<div th:replace="/console/layout :: sidebar('document_list')"></div>
+
+	<div id="page_content">
+		<div id="page_content_inner">
+
+			<ul class="uk-breadcrumb">
+				<li><a th:href="@{/console/document}">文库管理</a></li>
+				<li><span>文库编辑</span></li>
+			</ul>
+
+			<form id="main-form" class="uk-form-stacked" th:action="@{/console/document/save}" method="post"
+				th:object="${entity}" data-parsley-validate>
+				<input type="hidden" th:field="*{id}"> <input type="hidden" name="catalog" value="">
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-title">标题</label>
+					<div class="uk-form-controls">
+						<input class="uk-input" id="input-title" th:field="*{title}" required type="text" placeholder="请输入标题">
+					</div>
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-summary">摘要</label>
+					<div class="uk-form-controls">
+						<textarea class="uk-textarea" id="input-summary" th:field="*{summary}" placeholder="请输入摘要"></textarea>
+					</div>
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="input-content">内容 <small><a href="#catalog-slide" uk-toggle>查看目录</a></small></label>
+					<div class="uk-form-controls">
+						<div id="input-content">
+							<textarea style="display: none;" required th:field="*{content}"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="uk-margin">
+					<div class="uk-align-right">
+						<button class="uk-button uk-button-primary" type="submit">保存</button>
+						<button class="uk-button uk-button-default" id="back-button" type="button">返回列表</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
+
+	<div th:replace="/console/layout :: footer"></div>
+
+	<div id="catalog-slide" uk-offcanvas>
+		<div class="uk-offcanvas-bar" id="toc-container"></div>
+	</div>
+
+	<script type="text/javascript" th:inline="javascript">
+		var base = /*[[${#httpServletRequest.getContextPath()}]]*/"";
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			var $tocContainer = $("#toc-container");
+			var $editor = editormd("input-content", {
+				width : "100%",
+				height : 640,
+				syncScrolling : "single",
+				toolbarAutoFixed : false,
+				emoji : true,
+				saveHTMLToTextarea : true,
+				imageUpload : true,
+				imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
+				imageUploadURL : "./php/upload.php",
+				tocContainer : $tocContainer,
+				tocDropdown : false,
+				path : base + "/assets/vendor/editor.md/lib/",
+				onload : function() {
+					$(this.editor).find("textarea[name=" + this.id + "-html-code]").attr("name", "htmlContent");
+				}
+			});
+
+			var $form = $("#main-form");
+			$form.parsley().on('field:validated', function() {
+				$form.find("input[name=catalog]").val($tocContainer.html());
+			}).on('form:submit', function() {
+				$.post($form.attr('action'), $form.serialize(), function(result) {
+					if (result.success) {
+						location.href = base + "/console/document";
+					} else {
+						UIkit.notification(result.msg);
+					}
+				}, "json");
+
+				return false;
+			});
+			
+			$("#back-button").on("click", function() {
+				location.href = base + "/console/document";
+			});
+		});
+	</script>
+</body>
+</html>

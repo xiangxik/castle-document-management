@@ -1,0 +1,23 @@
+<!doctype html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html>
+<head>
+<div th:replace="/console/layout :: head('控制台','','')"></div>
+</head>
+<body>
+	<div th:replace="/console/layout :: header"></div>
+
+	<div th:replace="/console/layout :: sidebar('dashboard')"></div>
+
+	<div id="page_content">
+		<div id="page_content_inner">
+
+			<div class="uk-placeholder uk-text-center" th:inline="text">你好，[[${currentUser.name}]]。欢迎来到文档库。</div>
+
+		</div>
+	</div>
+
+	<div th:replace="/console/layout :: footer"></div>
+
+</body>
+</html>
