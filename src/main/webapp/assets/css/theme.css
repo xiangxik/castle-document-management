@@ -166,7 +166,7 @@ form+.uk-table {
 	width: 80px;
 }
 
-.command-column > ul {
+.command-column>ul {
 	white-space: nowrap;
 	width: 80px;
 }
@@ -174,4 +174,8 @@ form+.uk-table {
 .datetime-column {
 	width: 128px;
 	white-space: nowrap;
+}
+
+.bootgrid-footer {
+	padding: 4px 20px;
 }

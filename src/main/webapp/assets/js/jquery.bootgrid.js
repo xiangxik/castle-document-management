@@ -1185,14 +1185,14 @@
 			 * @for css
 			 * @since 1.1.0
 			 */
-			responsiveTable : "table-responsive",
+			responsiveTable : "uk-overflow-auto",
 
 			right : "text-right",
 			search : "search form-group", // must be a unique class name or
 			// constellation of class names
 			// within the header and footer
 			searchField : "search-field form-control",
-			selectBox : "select-box", // must be a unique class name or
+			selectBox : "uk-checkbox", // must be a unique class name or
 			// constellation of class names within
 			// the entire table
 			selectCell : "select-cell", // must be a unique class name or

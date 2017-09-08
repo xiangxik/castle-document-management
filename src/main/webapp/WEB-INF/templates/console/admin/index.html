@@ -4,6 +4,7 @@
 <head>
 <div th:replace="/console/layout :: head('管理员列表','','')"></div>
 <script th:src="@{/assets/js/jquery.bootgrid.js}"></script>
+<script th:src="@{/assets/js/page.list.js}"></script>
 </head>
 <body>
 	<div th:replace="/console/layout :: header"></div>
@@ -34,14 +35,15 @@
 				</select>
 				<div>
 					<div class="uk-search uk-search-default">
-						<a href="javascript:;" class="uk-search-icon-flip" uk-search-icon></a> <input class="uk-search-input"
-							type="search" placeholder="搜索">
+						<a href="javascript:;" id="search-button" class="uk-search-icon-flip" uk-search-icon></a> <input
+							class="uk-search-input" type="search" placeholder="搜索">
 					</div>
 				</div>
 			</form>
 
 			<div class="uk-overflow-auto">
-				<table id="main_table" class="uk-table uk-table-middle uk-table-small uk-table-divider uk-table-condensed">
+				<table id="main_table"
+					class="uk-table uk-table-middle uk-table-small uk-table-hover uk-table-divider uk-table-condensed">
 					<thead>
 						<tr>
 							<th data-column-id="id" data-header-css-class="uk-width-1-10" data-type="numeric" data-identifier="true"
@@ -65,71 +67,10 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			var $searchForm = $("#search-form");
-			var $table = $("#main_table");
-			$table.bootgrid({
-				url : base + "/console/admin/page",
-				post : function() {
-					var property = $searchForm.find(".uk-select").val();
-					if (property && property != "") {
-						var searchValue = $searchForm.find(".uk-search-input").val();
-						if (searchValue && searchValue != "") {
-							var ret = {};
-							ret[property] = searchValue;
-							return ret;
-						}
-					}
-					return null;
-				},
-				formatters : {
-					"commands" : function(column, row) {
-						var link_edit = "<li><a uk-icon=\"icon: file-edit\" href=\""+base+"/console/admin/edit/"+row.id+"\"></a></li>";
-						var link_delete = "<li><a uk-icon=\"icon: trash\" class=\"command-delete\" href=\"javascript:;\"></a></li>";
-						return "<ul data-row-id=\""+row.id+"\" class=\"uk-iconnav\">" + link_edit + link_delete + "</ul>";
-					}
-				}
+			$("#page_content_inner").pagelist({
+				baseUrl : base + "/console/admin"
 			});
-			$table.on("loaded.rs.jquery.bootgrid", function() {
-				$table.find(".command-delete").on("click", function(e) {
-					var entity_id = $(this).closest("ul").data("row-id");
 
-					UIkit.modal.confirm("确定要删除吗？").then(function() {
-						$.post(base + "/console/admin/delete", {
-							ids : [ entity_id ]
-						}, function(resp) {
-							if (resp.success) {
-								UIkit.notification("操作成功");
-								$table.bootgrid("reload");
-							} else {
-								UIkit.notification(resp.msg);
-							}
-						}, "json");
-					});
-
-				});
-			});
-			$("#delete-button").on("click", function() {
-				var selectedRows = $table.bootgrid("getSelectedRows");
-				if (selectedRows && selectedRows.length > 0) {
-					UIkit.modal.confirm("确定要删除吗？").then(function() {
-						$.post(base + "/console/admin/delete", {
-							ids : selectedRows
-						}, function(resp) {
-							if (resp.success) {
-								UIkit.notification("操作成功");
-								$table.bootgrid("reload");
-							} else {
-								UIkit.notification(resp.msg);
-							}
-						}, "json");
-					});
-				} else {
-					UIkit.notification("请至少选择一条记录");
-				}
-			});
-			$("#refresh-button, .uk-search-icon-flip").on("click", function() {
-				$table.bootgrid("reload");
-			});
 		});
 	</script>
 </body>
