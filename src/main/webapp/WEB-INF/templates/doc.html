@@ -7,7 +7,7 @@
 <body>
 	<div th:replace="/layout :: header"></div>
 
-	<aside class="tm-sidebar-left uk-visible@m">
+	<aside class="tm-sidebar-left uk-visible@m" style="width: 300px;">
 		<h4>目录</h4>
 		<div th:utext="${doc.catalog}"></div>
 	</aside>
@@ -20,7 +20,7 @@
 		</div>
 	</div>
 
-	<div id="page_content">
+	<div id="page_content" style="margin-left: 300px">
 		<div id="page_content_inner">
 
 			<article class="uk-article">

@@ -166,6 +166,12 @@ form+.uk-table {
 	width: 80px;
 }
 
+.command-column > ul {
+	white-space: nowrap;
+	width: 80px;
+}
+
 .datetime-column {
 	width: 128px;
+	white-space: nowrap;
 }

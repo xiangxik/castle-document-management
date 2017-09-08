@@ -20,8 +20,8 @@
 
 			<div class="uk-margin-small">
 				<div class="uk-button-group">
-					<a th:href="@{/console/document/add}" class="uk-button uk-button-primary uk-button-small"><i
-						class="uk-icon-map"></i> 添加</a> <a id="delete-button" class="uk-button uk-button-danger uk-button-small">删除</a> <a
+					<a th:href="@{/console/document/add}" class="uk-button uk-button-primary uk-button-small">添加</a> <a
+						id="delete-button" class="uk-button uk-button-danger uk-button-small">删除</a> <a
 						class="uk-button uk-button-secondary uk-button-small" id="refresh-button">刷新</a>
 				</div>
 			</div>
@@ -40,19 +40,20 @@
 				</div>
 			</form>
 
-
-			<table id="main_table" class="uk-table uk-table-middle uk-table-small uk-table-divider uk-table-condensed">
-				<thead>
-					<tr>
-						<th data-column-id="id" data-header-css-class="uk-width-1-10" data-type="numeric" data-identifier="true"
-							data-visible="false">ID</th>
-						<th data-column-id="title" data-formatter="title">标题</th>
-						<th data-column-id="createdDate" data-converter="datetime" data-css-class="datetime-column">创建时间</th>
-						<th data-column-id="lastModifiedDate" data-converter="datetime" data-css-class="datetime-column">最后修改时间</th>
-						<th data-formatter="commands" data-sortable="false" data-css-class="command-column">操作</th>
-					</tr>
-				</thead>
-			</table>
+			<div class="uk-overflow-auto">
+				<table id="main_table" class="uk-table uk-table-middle uk-table-small uk-table-divider uk-table-condensed">
+					<thead>
+						<tr>
+							<th data-column-id="id" data-header-css-class="uk-width-1-10" data-type="numeric" data-identifier="true"
+								data-visible="false">ID</th>
+							<th data-column-id="title" data-formatter="title">标题</th>
+							<th data-column-id="createdDate" data-converter="datetime" data-css-class="datetime-column">创建时间</th>
+							<th data-column-id="lastModifiedDate" data-converter="datetime" data-css-class="datetime-column">最后修改时间</th>
+							<th data-formatter="commands" data-sortable="false" data-css-class="command-column">操作</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 	</div>
 
