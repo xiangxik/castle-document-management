@@ -39,6 +39,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.castle</groupId>
+			<artifactId>castle-plugin-storage</artifactId>
+			<version>${castle-platform.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.castle</groupId>
 			<artifactId>castle-security</artifactId>
 			<version>${castle-platform.version}</version>
 		</dependency>

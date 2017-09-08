@@ -3,8 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-	<th:block th:fragment="head(title,keyword,description)">
+	<th:block th:fragment="head(title,keywords,description)">
 		<title th:text="${title}"></title>
+		<meta name="keywords" th:content="${keywords}">
+		<meta name="description" th:content="${description}">
+		<meta name="author" content="ken@whenling.com">
 		<!-- UIkit CSS -->
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.28/css/uikit.min.css" />
 		<link rel="stylesheet" th:href="@{/assets/css/theme.css}" />
@@ -22,7 +25,7 @@
 			<nav class="uk-navbar-container" uk-navbar>
 
 				<div class="uk-navbar-left">
-					<a class="uk-navbar-item uk-logo" href="../">文档库</a>
+					<a class="uk-navbar-item uk-logo" th:href="@{/}" th:text="#{site.name}"></a>
 				</div>
 
 				<div class="uk-navbar-right">

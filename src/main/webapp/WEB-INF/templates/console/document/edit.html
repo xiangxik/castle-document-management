@@ -75,14 +75,55 @@
 				saveHTMLToTextarea : true,
 				imageUpload : true,
 				imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
-				imageUploadURL : "./php/upload.php",
+				imageUploadURL : base + "/editor/upload",
 				tocContainer : $tocContainer,
 				tocDropdown : false,
+				toolbarIcons : function() {
+					return [ "undo", "redo", "|", "bold", "del", "italic", "quote", "|", "list-ul", "list-ol", "hr", "|", "link", "reference-link",
+							"image", "elfinder", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities",
+							"pagebreak", "|", "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|", "help" ];
+				},
+				toolbarIconsClass : {
+					elfinder : "fa-cloud"
+				},
+				toolbarHandlers : {
+					elfinder : function(cm, icon, cursor, selection) {
+						var me = this;
+						me.onElfinderInsert = function(file, fm) {
+							// 相对路径转绝对路径
+							var a = document.createElement('a');
+							a.href = file.url;
+							var url = a.href;
+
+							var alt = "";
+							var link = "";
+
+							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
+
+							if (link === "" || link === "http://") {
+								cm.replaceSelection("![" + alt + "](" + url + altAttr + ")");
+							} else {
+								cm.replaceSelection("[![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")");
+							}
+
+							if (alt === "") {
+								cm.setCursor(cursor.line, cursor.ch + 2);
+							}
+							me.editor.find(".editormd-elfinder-dialog").hide();
+							me.editor.find(".editormd-mask").hide();
+							me.lockScreen(false).hideMask();
+						}
+						me.executePlugin("elfinderDialog", "elfinder-dialog/elfinder-dialog");
+					}
+				},
 				path : base + "/assets/vendor/editor.md/lib/",
 				onload : function() {
 					$(this.editor).find("textarea[name=" + this.id + "-html-code]").attr("name", "htmlContent");
 				}
 			});
+
+			//选择文件回调用
+			window.editor = $editor;
 
 			var $form = $("#main-form");
 			$form.parsley().on('field:validated', function() {
@@ -98,7 +139,7 @@
 
 				return false;
 			});
-			
+
 			$("#back-button").on("click", function() {
 				location.href = base + "/console/document";
 			});

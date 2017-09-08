@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<div th:replace="/layout :: head('首页','','')"></div>
+<div th:replace="/layout :: head(${doc.title},${doc.title},${doc.catalog})"></div>
 </head>
 <body>
 	<div th:replace="/layout :: header"></div>

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<div th:replace="/layout :: head('首页','','')"></div>
+<div th:replace="/layout :: head('首页 - 当凌文档库','文档库，当凌科技','当凌文档库是由广州当凌信息科技有限公司开发的一个文档管理系统。')"></div>
 </head>
 <body>
 	<div th:replace="/layout :: header"></div>
@@ -21,7 +21,7 @@
 										<a th:href="@{/doc/}+${doc.id}" class="uk-button uk-button-text" th:text="${doc.title}">title</a>
 									</h3>
 									<p class="uk-text-meta uk-margin-remove-top" th:inline="text">
-										<time>[[${#dates.format(doc.createdDate, 'yyyy-MM-dd HH:mm:ss')}]]</time>
+										<time>[[${#dates.format(doc.lastModifiedDate, 'yyyy-MM-dd HH:mm:ss')}]]</time>
 									</p>
 								</div>
 							</div>

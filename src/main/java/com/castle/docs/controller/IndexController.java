@@ -2,7 +2,9 @@ package com.castle.docs.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,8 @@ public class IndexController extends DefaultController {
 	private DocumentService documentService;
 
 	@RequestMapping(value = { "", "/", "/index" }, method = RequestMethod.GET)
-	public String show(@QuerydslPredicate(root = Document.class) Predicate predicate, Pageable pageable, Model model) {
+	public String show(@QuerydslPredicate(root = Document.class) Predicate predicate,
+			@PageableDefault(sort = "lastModifiedDate", direction = Direction.DESC) Pageable pageable, Model model) {
 		model.addAttribute("docs", documentService.findAll(predicate, pageable));
 		return "/index";
 	}
