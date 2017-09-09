@@ -16,13 +16,15 @@
 					<div class="uk-margin">
 						<label class="uk-form-label" for="input-username">账号</label>
 						<div class="uk-form-controls">
-							<input class="uk-input" id="input-username" required type="text" name="username" placeholder="请输入账号">
+							<input class="uk-input" id="input-username" required data-parsley-required-message="账号不能为空" type="text"
+								name="username" placeholder="请输入账号">
 						</div>
 					</div>
 					<div class="uk-margin">
 						<label class="uk-form-label" for="input-password">密码</label>
 						<div class="uk-form-controls">
-							<input class="uk-input" id="input-password" required type="password" name="password" placeholder="请输入密码">
+							<input class="uk-input" id="input-password" required data-parsley-required-message="密码不能为空" type="password"
+								name="password" placeholder="请输入密码">
 						</div>
 					</div>
 					<div class="uk-margin">
@@ -34,16 +36,16 @@
 	</div>
 
 	<div th:replace="/layout :: footer"></div>
-	
+
 	<script type="text/javascript" th:inline="javascript">
 		var base = /*[[${#httpServletRequest.getContextPath()}]]*/"";
 	</script>
-	
+
 	<script type="text/javascript">
 		$(function() {
 			var $form = $("#login-form");
 			$form.parsley().on('field:validated', function() {
-				
+
 			}).on('form:submit', function() {
 				$.post($form.attr('action'), $form.serialize(), function(result) {
 					if (result.success) {
@@ -52,8 +54,8 @@
 						UIkit.notification(result.msg);
 					}
 				}, "json");
-				
-				return false; 
+
+				return false;
 			});
 		});
 	</script>

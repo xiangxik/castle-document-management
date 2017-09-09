@@ -1,6 +1,6 @@
 (function($) {
 	"use strict";
-	var namespace = ".rs.jquery.bootgrid";
+	var namespace = ".rs.jquery.pagelist";
 
 	function init() {
 		this.element.trigger("initialize" + namespace);

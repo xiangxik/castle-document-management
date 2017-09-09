@@ -682,7 +682,7 @@
 
 		if (sortOrder && sortOrder === "asc") {
 			this.sortDictionary[columnId] = "desc";
-			icon.empty().append("<i uk-icon=\"icon: arrow-down\"></i>");
+			icon.empty().append("<i uk-icon=\"icon: arrow-down; ratio: 0.5\"></i>");
 			icon.removeClass(css.iconUp).addClass(css.iconDown);
 		} else if (sortOrder && sortOrder === "desc") {
 			if (this.options.multiSort) {
@@ -697,12 +697,12 @@
 				icon.removeClass(css.iconDown);
 			} else {
 				this.sortDictionary[columnId] = "asc";
-				icon.empty().append("<i uk-icon=\"icon: arrow-up\"></i>");
+				icon.empty().append("<i uk-icon=\"icon: arrow-up; ratio: 0.5\"></i>");
 				icon.removeClass(css.iconDown).addClass(css.iconUp);
 			}
 		} else {
 			this.sortDictionary[columnId] = "asc";
-			icon.empty().append("<i uk-icon=\"icon: arrow-up\"></i>");
+			icon.empty().append("<i uk-icon=\"icon: arrow-up; ratio: 0.5\"></i>");
 			icon.addClass(css.iconUp);
 		}
 	}

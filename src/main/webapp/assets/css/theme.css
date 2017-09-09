@@ -179,3 +179,7 @@ form+.uk-table {
 .bootgrid-footer {
 	padding: 4px 20px;
 }
+
+.column-header-anchor.sortable {
+	display: block;
+}

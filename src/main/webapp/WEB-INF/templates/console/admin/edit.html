@@ -4,6 +4,7 @@
 <head>
 <div th:replace="/console/layout :: head('管理员编辑','','')"></div>
 <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
+<script th:src="@{/assets/js/page.edit.js}"></script>
 </head>
 <body>
 	<div th:replace="/console/layout :: header"></div>
@@ -24,20 +25,23 @@
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-username">账号</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" id="input-username" th:field="*{username}" required type="text" placeholder="请输入账号">
+						<input class="uk-input" id="input-username" th:field="*{username}" required data-parsley-required-message="账号不能为空"
+							minlength="4" data-parsley-minlength-message="账号最小长度为4" type="text" placeholder="请输入账号">
 					</div>
 				</div>
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-password">密码</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" th:if="${entity.new}" id="input-password" required name="rawPassword" value="" type="text" placeholder="请输入密码" onfocus="this.type='password'">
-						<input class="uk-input" th:if="!${entity.new}" id="input-password" name="rawPassword" value="" type="text" placeholder="请输入密码, 留空则不修改密码" onfocus="this.type='password'">
+						<input class="uk-input" id="input-password" th:data-parsley-required="${entity.new}?'true':'false'"
+							data-parsley-required-message="密码不能为空" minlength="6" data-parsley-minlength-message="密码最小长度为4" name="rawPassword"
+							value="" type="text" th:placeholder="'请输入密码'+(${entity.new}?'':'，留空则不修改密码')" onfocus="this.type='password'">
 					</div>
 				</div>
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-name">姓名</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" id="input-name" th:field="*{name}" required type="text" placeholder="请输入姓名">
+						<input class="uk-input" id="input-name" th:field="*{name}" required data-parsley-required-message="姓名不能为空"
+							minlength="2" data-parsley-minlength-message="姓名最小长度为2" type="text" placeholder="请输入姓名">
 					</div>
 				</div>
 				<div class="uk-margin">
@@ -58,21 +62,8 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
-			var $form = $("#main-form");
-			$form.parsley().on('form:submit', function() {
-				$.post($form.attr('action'), $form.serialize(), function(result) {
-					if (result.success) {
-						location.href = base + "/console/admin";
-					} else {
-						UIkit.notification(result.msg);
-					}
-				}, "json");
-
-				return false;
-			});
-
-			$("#back-button").on("click", function() {
-				location.href = base + "/console/admin";
+			$("#page_content_inner").pageedit({
+				baseUrl : base + "/console/admin"
 			});
 		});
 	</script>

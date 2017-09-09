@@ -6,6 +6,7 @@
 <link rel="stylesheet" th:href="@{/assets/vendor/editor.md/css/editormd.min.css}" />
 <script th:src="@{/assets/vendor/editor.md/editormd.min.js}"></script>
 <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
+<script th:src="@{/assets/js/page.edit.js}"></script>
 </head>
 <body>
 	<div th:replace="/console/layout :: header"></div>
@@ -26,7 +27,7 @@
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-title">标题</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" id="input-title" th:field="*{title}" required type="text" placeholder="请输入标题">
+						<input class="uk-input" id="input-title" th:field="*{title}" required data-parsley-required-message="标题不能为空" type="text" placeholder="请输入标题">
 					</div>
 				</div>
 				<div class="uk-margin">
@@ -125,23 +126,11 @@
 			//选择文件回调用
 			window.editor = $editor;
 
-			var $form = $("#main-form");
-			$form.parsley().on('field:validated', function() {
-				$form.find("input[name=catalog]").val($tocContainer.html());
-			}).on('form:submit', function() {
-				$.post($form.attr('action'), $form.serialize(), function(result) {
-					if (result.success) {
-						location.href = base + "/console/document";
-					} else {
-						UIkit.notification(result.msg);
-					}
-				}, "json");
-
-				return false;
-			});
-
-			$("#back-button").on("click", function() {
-				location.href = base + "/console/document";
+			var page = $("#page_content_inner").pageedit({
+				baseUrl : base + "/console/document",
+				onFormValidatedSuccess : function($form) {
+					$form.$element.find("input[name=catalog]").val($tocContainer.html());
+				}
 			});
 		});
 	</script>
