@@ -183,3 +183,10 @@ form+.uk-table {
 .column-header-anchor.sortable {
 	display: block;
 }
+
+.uk-placeholder.uk-image {
+	width: 84px;
+	height: 84px;
+	margin: 0;
+	padding: 2px;
+}

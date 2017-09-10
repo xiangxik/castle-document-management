@@ -34,6 +34,10 @@ public class Admin extends DataEntity<Admin, Long> implements LogicDeleteable, L
 	@Column(nullable = false, length = 200)
 	private String name;
 
+	/** 头像 */
+	@Size(max = 200)
+	private String avatar;
+
 	/** 是否禁用 */
 	@Column(nullable = false)
 	private boolean disabled = false;
@@ -81,6 +85,14 @@ public class Admin extends DataEntity<Admin, Long> implements LogicDeleteable, L
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public int getLoginFailureCount() {

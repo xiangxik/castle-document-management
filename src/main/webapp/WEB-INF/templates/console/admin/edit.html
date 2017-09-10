@@ -5,6 +5,7 @@
 <div th:replace="/console/layout :: head('管理员编辑','','')"></div>
 <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
 <script th:src="@{/assets/js/page.edit.js}"></script>
+<script th:src="@{/assets/js/upload.image.js}"></script>
 </head>
 <body>
 	<div th:replace="/console/layout :: header"></div>
@@ -25,8 +26,9 @@
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-username">账号</label>
 					<div class="uk-form-controls">
-						<input class="uk-input" id="input-username" th:field="*{username}" required data-parsley-required-message="账号不能为空"
+						<input th:if="${entity.new}" class="uk-input" id="input-username" th:field="*{username}" required data-parsley-required-message="账号不能为空"
 							minlength="4" data-parsley-minlength-message="账号最小长度为4" type="text" placeholder="请输入账号">
+						<span th:if="${!entity.new}" th:text="*{username}"></span>
 					</div>
 				</div>
 				<div class="uk-margin">
@@ -44,19 +46,26 @@
 							minlength="2" data-parsley-minlength-message="姓名最小长度为2" type="text" placeholder="请输入姓名">
 					</div>
 				</div>
+
 				<div class="uk-margin">
 					<label class="uk-form-label" for="input-avatar">头像</label>
 					<div class="uk-form-controls">
-						<div class="test-upload uk-placeholder uk-text-center">
-							<span uk-icon="icon: cloud-upload"></span> <span class="uk-text-middle">Attach binaries by dropping them
-								here or</span>
+						<div class="upload-avatar">
+							<div class="uk-placeholder uk-image">
+								<img alt="" th:src="*{avatar}">
+							</div>
 							<div uk-form-custom>
-								<input type="file"> <span class="uk-link">selecting one</span>
+								<input type="file" multiple> <span class="uk-link">上传</span> <input type="hidden" th:field="*{avatar}">
+							</div>
+							|
+							<div uk-form-custom>
+								<span class="uk-link uk-link-clear">清除</span>
 							</div>
 						</div>
-						<progress id="progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+						<progress class="uk-progress" value="0" max="100" hidden></progress>
 					</div>
 				</div>
+
 				<div class="uk-margin">
 					<div class="uk-align-right">
 						<button class="uk-button uk-button-primary" type="submit">保存</button>
@@ -76,61 +85,8 @@
 	<script type="text/javascript">
 		$(function() {
 
-			var bar = $("#progressbar")[0];
-
-			UIkit.upload('.test-upload', {
-
-				url : base + '/multipart/uploadMore',
-				multiple : false,
-
-				beforeSend : function() {
-					console.log('beforeSend', arguments);
-				},
-				beforeAll : function() {
-					console.log('beforeAll', arguments);
-				},
-				load : function() {
-					console.log('load', arguments);
-				},
-				error : function() {
-					console.log('error', arguments);
-				},
-				complete : function() {
-					console.log('complete', arguments);
-				},
-
-				loadStart : function(e) {
-					console.log('loadStart', arguments);
-
-					bar.removeAttribute('hidden');
-					bar.max = e.total;
-					bar.value = e.loaded;
-				},
-
-				progress : function(e) {
-					console.log('progress', arguments);
-
-					bar.max = e.total;
-					bar.value = e.loaded;
-
-				},
-
-				loadEnd : function(e) {
-					console.log('loadEnd', arguments);
-
-					bar.max = e.total;
-					bar.value = e.loaded;
-				},
-
-				completeAll : function() {
-					console.log('completeAll', arguments);
-
-					setTimeout(function() {
-						bar.setAttribute('hidden', 'hidden');
-					}, 1000);
-
-					alert('Upload Completed');
-				}
+			$(".upload-avatar").uploadImage({
+				url : base + '/multipart/uploadMore'
 			});
 
 			$("#page_content_inner").pageedit({
