@@ -4,9 +4,9 @@
 <head>
 <div th:replace="/console/layout :: head('文库编辑','','')"></div>
 <link rel="stylesheet" th:href="@{/assets/vendor/editor.md/css/editormd.min.css}" />
-<script th:src="@{/assets/vendor/editor.md/editormd.min.js}"></script>
+<script th:src="@{/bower_components/editor.md/editormd.min.js}"></script>
 <script src="http://parsleyjs.org/dist/parsley.min.js"></script>
-<script th:src="@{/assets/js/page.edit.js}"></script>
+<script th:src="@{/assets/uikit/js/page.edit.js}"></script>
 </head>
 <body>
 	<div th:replace="/console/layout :: header"></div>
@@ -93,7 +93,7 @@
 						me.onElfinderInsert = function(file, fm) {
 							// 相对路径转绝对路径
 							var a = document.createElement('a');
-							a.href = file.url;
+							a.href = base+"/1/2/"+file.url;
 							var url = a.href;
 
 							var alt = "";

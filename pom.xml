@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.castle</groupId>
-			<artifactId>castle-theme-uikit</artifactId>
+			<artifactId>castle-theme-uikit-custom</artifactId>
 			<version>${castle-platform.version}</version>
 		</dependency>
 		<dependency>
