@@ -110,6 +110,12 @@
 
 	function initSearchForm() {
 		var that = this;
+		if (this.$searchForm) {
+			this.$searchForm.on("submit", function() {
+				that.$table.bootgrid("reload");
+				return false;
+			});
+		}
 		if (this.$searchButton) {
 			this.$searchButton.on("click", function() {
 				that.$table.bootgrid("reload");

@@ -45,6 +45,19 @@
 					</div>
 				</div>
 				<div class="uk-margin">
+					<label class="uk-form-label" for="input-avatar">头像</label>
+					<div class="uk-form-controls">
+						<div class="test-upload uk-placeholder uk-text-center">
+							<span uk-icon="icon: cloud-upload"></span> <span class="uk-text-middle">Attach binaries by dropping them
+								here or</span>
+							<div uk-form-custom>
+								<input type="file"> <span class="uk-link">selecting one</span>
+							</div>
+						</div>
+						<progress id="progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+					</div>
+				</div>
+				<div class="uk-margin">
 					<div class="uk-align-right">
 						<button class="uk-button uk-button-primary" type="submit">保存</button>
 						<button class="uk-button uk-button-default" id="back-button" type="button">返回列表</button>
@@ -62,6 +75,64 @@
 	</script>
 	<script type="text/javascript">
 		$(function() {
+
+			var bar = $("#progressbar")[0];
+
+			UIkit.upload('.test-upload', {
+
+				url : base + '/multipart/uploadMore',
+				multiple : false,
+
+				beforeSend : function() {
+					console.log('beforeSend', arguments);
+				},
+				beforeAll : function() {
+					console.log('beforeAll', arguments);
+				},
+				load : function() {
+					console.log('load', arguments);
+				},
+				error : function() {
+					console.log('error', arguments);
+				},
+				complete : function() {
+					console.log('complete', arguments);
+				},
+
+				loadStart : function(e) {
+					console.log('loadStart', arguments);
+
+					bar.removeAttribute('hidden');
+					bar.max = e.total;
+					bar.value = e.loaded;
+				},
+
+				progress : function(e) {
+					console.log('progress', arguments);
+
+					bar.max = e.total;
+					bar.value = e.loaded;
+
+				},
+
+				loadEnd : function(e) {
+					console.log('loadEnd', arguments);
+
+					bar.max = e.total;
+					bar.value = e.loaded;
+				},
+
+				completeAll : function() {
+					console.log('completeAll', arguments);
+
+					setTimeout(function() {
+						bar.setAttribute('hidden', 'hidden');
+					}, 1000);
+
+					alert('Upload Completed');
+				}
+			});
+
 			$("#page_content_inner").pageedit({
 				baseUrl : base + "/console/admin"
 			});
