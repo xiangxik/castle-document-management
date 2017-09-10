@@ -33,7 +33,7 @@
 
 				<div class="uk-navbar-right uk-visible@m">
 					<ul class="uk-navbar-nav user-nav">
-						<li><a href="javascript:;" th:text="${currentUser.name}"></a>
+						<li><a href="javascript:;" th:text="${auth.currentUser.name}"></a>
 							<div class="uk-navbar-dropdown">
 								<ul class="uk-nav uk-navbar-dropdown-nav">
 									<li><a th:href="@{/logout}">退出</a></li>
@@ -68,7 +68,7 @@
 					<button class="uk-offcanvas-close" type="button" uk-close></button>
 
 					<ul class="uk-nav-default uk-nav-parent-icon uk-margin-top" uk-nav>
-						<li class="uk-parent"><a href="javascript:;" th:text="${currentUser.name}">user</a>
+						<li class="uk-parent"><a href="javascript:;" th:text="${auth.currentUser.name}">user</a>
 							<ul class="uk-nav-sub">
 								<li><a th:href="@{/logout}">退出</a></li>
 							</ul></li>

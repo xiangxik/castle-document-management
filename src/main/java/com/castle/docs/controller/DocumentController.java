@@ -8,12 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.castle.docs.entity.Document;
-import com.castle.docs.support.mvc.ConsoleEntityController;
+import com.castle.docs.support.mvc.EntityController;
 import com.querydsl.core.types.Predicate;
 
 @Controller
 @RequestMapping("/console/document")
-public class DocumentController extends ConsoleEntityController<Document, Long> {
+public class DocumentController extends EntityController<Document, Long> {
 
 	@Override
 	public Page<Document> doPage(Predicate predicate, @PageableDefault(sort = "createdDate", direction = Direction.DESC) Pageable pageable) {

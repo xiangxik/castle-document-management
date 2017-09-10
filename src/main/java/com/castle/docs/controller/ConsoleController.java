@@ -1,11 +1,9 @@
 package com.castle.docs.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.castle.docs.entity.Admin;
 import com.castle.docs.support.mvc.DefaultController;
 
 @Controller
@@ -17,9 +15,4 @@ public class ConsoleController extends DefaultController {
 		return "/console/index";
 	}
 	
-	@ModelAttribute("currentUser")
-	public Admin setCurrentUserAttr() {
-		return super.getCurrentUser();
-	}
-
 }

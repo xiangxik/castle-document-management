@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.dialect.springdata.util.Strings;
 
 import com.castle.docs.entity.Admin;
-import com.castle.docs.support.mvc.ConsoleEntityController;
+import com.castle.docs.support.mvc.EntityController;
 import com.querydsl.core.types.Predicate;
 
 @Controller
 @RequestMapping("/console/admin")
-public class AdminController extends ConsoleEntityController<Admin, Long> {
+public class AdminController extends EntityController<Admin, Long> {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
